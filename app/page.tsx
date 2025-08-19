@@ -215,10 +215,14 @@ export default function Portfolio() {
               <div>
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-400 to-indigo-600 rounded-full flex items-center justify-center"
+                  className="w-[20.5rem] h-[30rem] mx-auto bg-gradient-to-br from-blue-400 to-indigo-600 rounded-xl p-1"
                 >
-                  <div className="w-60 h-60 bg-white rounded-full flex items-center justify-center">
-                    <Users className="w-24 h-24 text-primary" />
+                  <div className="w-full h-full bg-white rounded-lg overflow-hidden">
+                    <img
+                      src="/jose_luis.png"
+                      alt="José Luis"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </motion.div>
               </div>

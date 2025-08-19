@@ -24,12 +24,13 @@ import { LanguageSelector } from "@/components/language-selector"
 const certifications = [
   // Frontend & Full Stack
   {
-    name: "Responsive Web Design",
-    institution: "freeCodeCamp",
+    name: "Domina CSS",
+    institution: "Linkedin",
     year: "2023",
     category: "Frontend & Full Stack",
     icon: <Code className="w-6 h-6" />,
     color: "bg-green-600",
+    image: "/dominaCSS.png",
   },
   {
     name: "JavaScript Algorithms and Data Structures",
@@ -446,9 +447,9 @@ export default function CertificationsPage() {
                     onClick={() => setSelectedCertification(cert)}
                   >
                     <CardHeader className="text-center p-0">
-                      <div className="w-full h-32 bg-gray-100 rounded-t-lg overflow-hidden">
+                      <div className="w-full h-42 bg-gray-100 rounded-t-lg overflow-hidden">
                         <img
-                          src="/imagen2.png"
+                          src={(cert as any).image || "/imagen2.png"}
                           alt={cert.name}
                           className="w-full h-full object-cover"
                         />
@@ -523,7 +524,7 @@ export default function CertificationsPage() {
                 </svg>
               </button>
               <img
-                src="/imagen2.png"
+                src={(selectedCertification as any)?.image || "/imagen2.png"}
                 alt={selectedCertification.name}
                 className="w-full h-auto max-h-[70vh] object-contain"
               />
