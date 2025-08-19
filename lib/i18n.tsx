@@ -216,6 +216,12 @@ const translations = {
     "contact.form.email": "Tu Email",
     "contact.form.message": "Tu mensaje",
     "contact.form.send": "Enviar Mensaje",
+    
+    // Footer
+    "footer.rights": "© José Luis. Todos los derechos reservados.",
+    "footer.home": "Inicio",
+    "footer.projects": "Proyectos",
+    "footer.contact": "Contacto",
   },
   en: {
     // Navigation
@@ -419,6 +425,12 @@ const translations = {
     "contact.form.email": "Your Email",
     "contact.form.message": "Your message",
     "contact.form.send": "Send Message",
+    
+    // Footer
+    "footer.rights": "© José Luis. All rights reserved.",
+    "footer.home": "Home",
+    "footer.projects": "Projects",
+    "footer.contact": "Contact",
   },
 }
 

@@ -464,7 +464,7 @@ export default function Portfolio() {
                   titleKey: "projects.auth.title",
                   descriptionKey: "projects.auth.desc",
                   tech: ["Node.js", "JWT", "OAuth", "MongoDB"],
-                  image: "/placeholder-o7tmv.png",
+                  image: "/websecure.png",
                 },
               ].map((project, index) => (
                 <motion.div
@@ -537,12 +537,12 @@ export default function Portfolio() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{t("certifications.title")}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {[
-                { name: "FreeCodeCamp JavaScript", org: "FreeCodeCamp", image: "/imagen2.png" },
-                { name: "React Developer", org: "FreeCodeCamp", image: "/imagen2.png" },
-                { name: "Data Analysis with Python", org: "FreeCodeCamp", image: "/imagen2.png" },
-                { name: "Google Machine Learning", org: "Google", image: "/imagen2.png" },
-                { name: "MongoDB University", org: "MongoDB", image: "/imagen2.png" },
-                { name: "OWASP Security", org: "OWASP", image: "/imagen2.png" },
+                { name: "FreeCodeCamp JavaScript", org: "FreeCodeCamp", image: "/dominaCSS.png" },
+                { name: "React Developer", org: "FreeCodeCamp", image: "/dominaCSS.png" },
+                { name: "Data Analysis with Python", org: "FreeCodeCamp", image: "/dominaCSS.png" },
+                { name: "Google Machine Learning", org: "Google", image: "/dominaCSS.png" },
+                { name: "MongoDB University", org: "MongoDB", image: "/dominaCSS.png" },
+                { name: "OWASP Security", org: "OWASP", image: "/dominaCSS.png" },
               ].map((cert, index) => (
                 <motion.div
                   key={index}

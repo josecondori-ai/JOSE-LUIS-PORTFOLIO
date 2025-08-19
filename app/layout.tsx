@@ -4,6 +4,8 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 import { I18nProvider } from "@/lib/i18n"
+import { ThemeProvider } from "@/components/theme-provider"
+import { DarkModeToggle } from "@/components/dark-mode-toggle"
 
 export const metadata: Metadata = {
   title: "José Luis - Full Stack Developer | Technical Leader | Instructor",
@@ -18,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <style>{`
 html {
@@ -29,7 +31,10 @@ html {
         `}</style>
       </head>
       <body>
-        <I18nProvider>{children}</I18nProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <I18nProvider>{children}</I18nProvider>
+          <DarkModeToggle />
+        </ThemeProvider>
       </body>
     </html>
   )
