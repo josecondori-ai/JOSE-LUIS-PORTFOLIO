@@ -30,6 +30,7 @@ import { LanguageSelector } from "@/components/language-selector"
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home")
+  const [selectedCertification, setSelectedCertification] = useState<{name: string, org: string, image: string} | null>(null)
   const { scrollY } = useScroll()
   const headerOpacity = useTransform(scrollY, [0, 100], [0, 1])
   const { t } = useI18n()
@@ -61,17 +62,17 @@ export default function Portfolio() {
     <div className="min-h-screen bg-background">
       {/* Navigation */}
       <motion.header
-        className="fixed top-0 w-full z-50 transition-all duration-300"
-        style={{ backgroundColor: `rgba(255, 255, 255, ${headerOpacity.get() * 0.95})` }}
+        className="fixed top-0 w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-sm shadow-lg"
+        style={{ backgroundColor: `rgba(255, 255, 255, ${Math.max(0.95, headerOpacity.get() * 0.95)})` }}
       >
         <nav className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-xl font-bold text-primary"
+              className="text-xl font-bold text-gray-900"
             >
-              José Luis
+              José Luis Condori
             </motion.div>
             <div className="hidden md:flex space-x-8">
               {[
@@ -86,8 +87,8 @@ export default function Portfolio() {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`text-sm font-medium transition-colors hover:text-primary cursor-pointer ${
-                    activeSection === item.id ? "text-primary" : "text-muted-foreground"
+                  className={`text-sm font-medium transition-colors hover:text-blue-600 cursor-pointer ${
+                    activeSection === item.id ? "text-blue-600" : "text-gray-700"
                   }`}
                 >
                   {t(item.key)}
@@ -101,7 +102,11 @@ export default function Portfolio() {
 
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 opacity-50" />
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url(/fondo.jpg)' }}
+        />
+        <div className="absolute inset-0 bg-black/80" />
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Profile Image Section */}
@@ -115,10 +120,10 @@ export default function Portfolio() {
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="w-80 h-80 rounded-full overflow-hidden shadow-2xl"
+                  className="w-90 h-90 rounded-full overflow-hidden shadow-2xl"
                 >
                   <img
-                    src="/placeholder-grs0e.png"
+                    src="/perfil.jpg"
                     alt="José Luis - Full Stack Developer"
                     className="w-full h-full object-cover filter grayscale"
                   />
@@ -142,13 +147,13 @@ export default function Portfolio() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center lg:text-left"
+              className="text-center lg:text-left bg-black/50 p-8 rounded-lg backdrop-blur-sm"
             >
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="text-4xl md:text-6xl font-bold text-foreground mb-6"
+                className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl"
               >
                 {t("hero.title")}
               </motion.h1>
@@ -156,7 +161,7 @@ export default function Portfolio() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-xl md:text-2xl text-muted-foreground mb-4"
+                className="text-xl md:text-2xl text-white mb-4 drop-shadow-xl"
               >
                 {t("hero.subtitle")}
               </motion.h2>
@@ -164,7 +169,7 @@ export default function Portfolio() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
-                className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto lg:mx-0"
+                className="text-lg text-gray-100 mb-8 max-w-2xl mx-auto lg:mx-0 drop-shadow-lg"
               >
                 {t("hero.description")}
               </motion.p>
@@ -177,14 +182,14 @@ export default function Portfolio() {
                 <Button
                   size="lg"
                   onClick={() => scrollToSection("projects")}
-                  className="bg-primary hover:bg-primary/90 cursor-pointer"
+                  className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer shadow-lg"
                 >
                   {t("hero.viewProjects")}
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="flex items-center gap-2 bg-transparent cursor-pointer hover:bg-muted"
+                  className="flex items-center gap-2 bg-white/90 hover:bg-white text-gray-900 border-white cursor-pointer shadow-lg backdrop-blur-sm"
                 >
                   <Download className="w-4 h-4" />
                   {t("hero.downloadCV")}
@@ -333,7 +338,7 @@ export default function Portfolio() {
                           >
                             <Badge
                               variant="secondary"
-                              className={`text-xs text-white ${skill.color} hover:opacity-90 cursor-pointer flex items-center gap-1`}
+                              className={`text-xs text-white ${skill.color} skill-badge cursor-pointer flex items-center gap-1`}
                             >
                               <span>{skill.icon}</span>
                               {skill.name}
@@ -528,12 +533,12 @@ export default function Portfolio() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{t("certifications.title")}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {[
-                { name: "FreeCodeCamp JavaScript", org: "FreeCodeCamp" },
-                { name: "React Developer", org: "FreeCodeCamp" },
-                { name: "Data Analysis with Python", org: "FreeCodeCamp" },
-                { name: "Google Machine Learning", org: "Google" },
-                { name: "MongoDB University", org: "MongoDB" },
-                { name: "OWASP Security", org: "OWASP" },
+                { name: "FreeCodeCamp JavaScript", org: "FreeCodeCamp", image: "/imagen2.png" },
+                { name: "React Developer", org: "FreeCodeCamp", image: "/imagen2.png" },
+                { name: "Data Analysis with Python", org: "FreeCodeCamp", image: "/imagen2.png" },
+                { name: "Google Machine Learning", org: "Google", image: "/imagen2.png" },
+                { name: "MongoDB University", org: "MongoDB", image: "/imagen2.png" },
+                { name: "OWASP Security", org: "OWASP", image: "/imagen2.png" },
               ].map((cert, index) => (
                 <motion.div
                   key={index}
@@ -542,10 +547,17 @@ export default function Portfolio() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <Card className="text-center hover:shadow-lg transition-shadow cursor-pointer">
+                  <Card 
+                    className="text-center hover:shadow-lg transition-shadow cursor-pointer hover:scale-105 transition-transform duration-200"
+                    onClick={() => setSelectedCertification(cert)}
+                  >
                     <CardHeader>
-                      <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <GraduationCap className="w-8 h-8 text-primary" />
+                      <div className="w-full h-52 bg-gray-100 rounded-lg overflow-hidden mb-4">
+                        <img
+                          src={cert.image}
+                          alt={cert.name}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <CardTitle className="text-lg">{cert.name}</CardTitle>
                       <CardDescription>{cert.org}</CardDescription>
@@ -615,6 +627,42 @@ export default function Portfolio() {
           </motion.div>
         </div>
       </section>
+
+      {/* Modal para certificaciones */}
+      {selectedCertification && (
+        <div 
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedCertification(null)}
+        >
+                      <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+            <div className="relative">
+              <button
+                onClick={() => setSelectedCertification(null)}
+                className="absolute top-4 right-4 z-10 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <img
+                src={selectedCertification.image}
+                alt={selectedCertification.name}
+                className="w-full h-auto max-h-[70vh] object-contain"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2">{selectedCertification.name}</h3>
+                <p className="text-gray-600">{selectedCertification.org}</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="bg-primary text-primary-foreground py-12">

@@ -337,6 +337,7 @@ const categoryMappings = {
 
 export default function CertificationsPage() {
   const [activeCategory, setActiveCategory] = useState("cert.categories.all")
+  const [selectedCertification, setSelectedCertification] = useState<{name: string, institution: string, year: string, category: string} | null>(null)
   const { t } = useI18n()
 
   useEffect(() => {
@@ -440,20 +441,25 @@ export default function CertificationsPage() {
                   whileHover={{ y: -3 }}
                   className="transform transition-transform duration-200"
                 >
-                  <Card className="h-full hover:shadow-lg transition-shadow duration-300 cursor-pointer">
-                    <CardHeader className="text-center">
-                      <div
-                        className={`w-16 h-16 ${cert.color} rounded-full flex items-center justify-center mx-auto mb-4 text-white`}
-                      >
-                        {cert.icon}
+                  <Card 
+                    className="h-full hover:shadow-lg transition-shadow duration-300 cursor-pointer hover:scale-105 transition-transform duration-200"
+                    onClick={() => setSelectedCertification(cert)}
+                  >
+                    <CardHeader className="text-center p-0">
+                      <div className="w-full h-32 bg-gray-100 rounded-t-lg overflow-hidden">
+                        <img
+                          src="/imagen2.png"
+                          alt={cert.name}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                      <CardTitle className="text-lg leading-tight">{cert.name}</CardTitle>
-                      <CardDescription className="flex flex-col gap-1">
-                        <span className="font-medium">{cert.institution}</span>
-                        <span className="text-sm">{cert.year}</span>
-                      </CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="text-center pt-4">
+                      <CardTitle className="text-lg leading-tight mb-2">{cert.name}</CardTitle>
+                      <div className="flex flex-col gap-1 mb-3">
+                        <span className="font-medium text-sm">{cert.institution}</span>
+                        <span className="text-xs text-muted-foreground">{cert.year}</span>
+                      </div>
                       <Badge variant="outline" className="w-full justify-center text-xs">
                         {cert.category}
                       </Badge>
@@ -493,6 +499,44 @@ export default function CertificationsPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Modal para certificaciones */}
+      {selectedCertification && (
+        <div 
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedCertification(null)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative">
+              <button
+                onClick={() => setSelectedCertification(null)}
+                className="absolute top-4 right-4 z-10 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <img
+                src="/imagen2.png"
+                alt={selectedCertification.name}
+                className="w-full h-auto max-h-[70vh] object-contain"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2">{selectedCertification.name}</h3>
+                <p className="text-gray-600 mb-1">{selectedCertification.institution}</p>
+                <p className="text-sm text-gray-500 mb-3">{selectedCertification.year}</p>
+                <Badge variant="outline">{selectedCertification.category}</Badge>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   )
 }
